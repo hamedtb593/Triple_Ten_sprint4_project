@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import base64
-import pyarrow as pa   # Looks like I needed this due to Render error that I got.
+
 st.write("Using PyArrow version:", pa.__version__)
 
 # loading the dataset 
