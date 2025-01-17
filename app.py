@@ -3,8 +3,6 @@ import pandas as pd
 import plotly.express as px
 import base64
 
-st.write("Using PyArrow version:", pa.__version__)
-
 # loading the dataset 
 df = pd.read_csv('https://https://triple10-sprint4-project.onrender.com//vehicles_us.csv')
 # Extracting the manufacturer from the model column
