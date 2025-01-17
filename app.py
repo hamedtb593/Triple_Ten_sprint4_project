@@ -9,9 +9,12 @@ df = pd.read_csv('vehicles_us.csv')
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 # drop rows with missing values on the model_year column
 df = df.dropna(subset=['model_year'])
+# Convert 'price' to numeric, coercing invalid values to NaN
+df["price"] = pd.to_numeric(df["price"], errors='coerce')
+# Drop rows where 'price' is NaN
+df = df.dropna(subset=["price"])
+# Convert 'price' to int64 after handling NaNs
 df["price"] = df["price"].astype("int64")
-df["price"] = df["price"].fillna(0).astype("int64")
-df = df[df["price"].notnull()]
 
 # Actual Web app that the user can see.
 st.title('Interactive Vehicle Stats Dashboard')
