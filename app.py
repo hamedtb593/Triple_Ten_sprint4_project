@@ -4,7 +4,7 @@ import plotly.express as px
 import base64
 
 # loading the dataset 
-df = pd.read_csv('https://triple10-sprint4-project.onrender.com//vehicles_us.csv')
+df = pd.read_csv('vehicles_us.csv')
 # Extracting the manufacturer from the model column
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 # drop rows with missing values on the model_year column
