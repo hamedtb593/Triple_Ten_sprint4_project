@@ -3,13 +3,18 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import base64
+import pyarrow as pa   # Looks like I needed this due to Render error that I got.
+st.write("Using PyArrow version:", pa.__version__)
 
 # loading the dataset 
-df = pd.read_csv('vehicles_us.csv')
+df = pd.read_csv('https://https://triple10-sprint4-project.onrender.com//vehicles_us.csv')
 # Extracting the manufacturer from the model column
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 # drop rows with missing values on the model_year column
 df = df.dropna(subset=['model_year'])
+df["price"] = df["price"].astype("int64")
+df["price"] = df["price"].fillna(0).astype("int64")
+df = df[df["price"].notnull()]
 
 # Actual Web app that the user can see.
 st.title('Interactive Vehicle Stats Dashboard')
