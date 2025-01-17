@@ -4,23 +4,9 @@ import plotly.express as px
 import base64
 
 
-# Ensure that the 'price' column is cleaned and converted properly
-def clean_price_column(df):
-    # Remove any non-numeric entries that could be causing issues
-    df['price'] = pd.to_numeric(df['price'], errors='coerce')  # Coerce invalid entries to NaN
-    df = df.dropna(subset=['price'])  # Drop rows where 'price' is NaN
-    df['price'] = df['price'].apply(lambda x: round(x) if pd.notnull(x) else 0)  # Round to nearest integer
-    df['price'] = df['price'].astype('int64')  # Convert to int64 type
-    return df
-
 # Loading dataset
 df = pd.read_csv('vehicles_us.csv')
-
-# Clean the price column
-df = clean_price_column(df)
-
-# loading the dataset 
-#df = pd.read_csv('vehicles_us.csv')
+df= df.dropna()
 # Extracting the manufacturer from the model column
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 # drop rows with missing values on the model_year column
