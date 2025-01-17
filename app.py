@@ -14,7 +14,7 @@ df["price"] = pd.to_numeric(df["price"], errors='coerce')
 # Drop rows where 'price' is NaN
 df = df.dropna(subset=["price"])
 # Convert 'price' to int64 after handling NaNs
-df["price"] = df["price"].astype("int64")
+df["price"] = df["price"].astype("float64").round().astype("int64")
 
 # Actual Web app that the user can see.
 st.title('Interactive Vehicle Stats Dashboard')
