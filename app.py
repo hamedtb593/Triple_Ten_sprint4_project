@@ -3,18 +3,29 @@ import pandas as pd
 import plotly.express as px
 import base64
 
-# loading the dataset 
+
+# Ensure that the 'price' column is cleaned and converted properly
+def clean_price_column(df):
+    # Remove any non-numeric entries that could be causing issues
+    df['price'] = pd.to_numeric(df['price'], errors='coerce')  # Coerce invalid entries to NaN
+    df = df.dropna(subset=['price'])  # Drop rows where 'price' is NaN
+    df['price'] = df['price'].apply(lambda x: round(x) if pd.notnull(x) else 0)  # Round to nearest integer
+    df['price'] = df['price'].astype('int64')  # Convert to int64 type
+    return df
+
+# Loading dataset
 df = pd.read_csv('vehicles_us.csv')
+
+# Clean the price column
+df = clean_price_column(df)
+
+# loading the dataset 
+#df = pd.read_csv('vehicles_us.csv')
 # Extracting the manufacturer from the model column
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0])
 # drop rows with missing values on the model_year column
 df = df.dropna(subset=['model_year'])
-# Convert 'price' to numeric, coercing invalid values to NaN
-df["price"] = pd.to_numeric(df["price"], errors='coerce')
-# Drop rows where 'price' is NaN
-df = df.dropna(subset=["price"])
-# Convert 'price' to int64 after handling NaNs
-df["price"] = df["price"].astype("float64").round().astype("int64")
+
 
 # Actual Web app that the user can see.
 st.title('Interactive Vehicle Stats Dashboard')
